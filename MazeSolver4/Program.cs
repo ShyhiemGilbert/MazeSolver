@@ -20,6 +20,15 @@ namespace MazeSolver4
 				//initialise maze using the specified file
 				maze = MazeHelper.InitialiseMaze(args[0]);
 			}
+			else if(args.Length > 1)
+
+			{
+				Console.WriteLine("Please select one file only");
+			}
+			else if(args.Length < 1)
+			{
+				Console.WriteLine("Please select a file");
+			}
 			else
 			{
 				//Display DialogBox to allow a file to be selected
