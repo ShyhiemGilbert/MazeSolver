@@ -95,7 +95,7 @@ namespace MazeSolver4.Classes
 			}
 		}
 
-		//Recursive search of maze 
+		//Recursive search of maze
 		public static string SolveMaze(Maze maze, Coordinates currentCoordinates)
 		{
 			//Before moving need to check if user will hit a wall.
@@ -110,8 +110,8 @@ namespace MazeSolver4.Classes
             maze.SearchedLocations.Add(currentCoordinates);
 
             List<string> directions = new List<string>{ "E","S","W","N" };
-      
-            //Search East, South, West, North 
+
+            //Search East, South, West, North
             foreach (var direction in directions)
             {
                 var coordinates = move(currentCoordinates, direction, maze.MazeWidth, maze.MazeHeight);
@@ -136,7 +136,7 @@ namespace MazeSolver4.Classes
         //Move in one direction in maze
 		public static Coordinates move(Coordinates coordinates, string direction, int gridWidth, int gridHeight)
 		{
-           
+
             //Get coordinates for placement on the grid x and y axis
             Coordinates newCoordinates = new Coordinates()
 				{
