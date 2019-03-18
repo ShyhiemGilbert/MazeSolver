@@ -1,41 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using MazeSolver4.Classes;
+using System.Windows.Forms;
+using System.IO;
+using System.Threading;
 
 namespace MazeSolver4
 {
 	static class Program
 	{
-		static IEnumerable<string> ReadFrom(string file)
+		[STAThread]
+		 static void Main(string[] args)
 		{
-			string line;
-			using (var reader = File.OpenText(file))
-			{
-				while ((line = reader.ReadLine()) != null)
-				{
-					yield return line;
-				}
-			}
-		}
-		static void Main(string[] args)
-		{
-			var Maze = ReadFrom(@"C:\Users\Shyhiem Gilbert\Source\Repos\ShyhiemGilbert\MazeSolver4\MazeSolver4\Mazes\input.txt");
-			foreach (var line in Maze)
-			{
-				Console.WriteLine((line));
-				var lineParts = line.Split(' ');
 
-			}
-			Console.ReadKey();
+            Maze maze;
+
+            //Check if a parameter has been specified, 
+            if (args.Length == 1)
+            {
+                //initialise maze using the specified file
+                maze = MazeHelper.InitialiseMaze(args[0]);
+            }
+            else
+            {
+                //Display DialogBox to allow a file to be selected
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var FilePath = File.ReadAllText(openFileDialog.FileName);
+                }
+                //initialise maze using the selected file
+                maze = MazeHelper.InitialiseMaze(openFileDialog.FileName);
+            }
+
+            //solve maze, searches the maze for a path to the end location.
+            var result = MazeHelper.SolveMaze(maze, maze.StartLocation);
+
+            //Solve maze will return E if it has found the end location in the maze.
+            if (result == "E")
+                Console.WriteLine("This maze can be solved: ");
+            //Otherwise the maze cannot be solved
+            else
+                Console.WriteLine("There is no solution for this maze: ");
+
+            Console.WriteLine();
+
+            MazeHelper.DisplayMaze(maze);
+
+            Console.ReadKey();
+
 
 		}
-	}
+
+
+
+    }
 
 
 
